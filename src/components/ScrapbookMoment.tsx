@@ -48,7 +48,7 @@ function checkOverlap(sticker1: StickerType, sticker2: StickerType): boolean {
 
 // Generate random stickers for a moment
 function generateStickers(momentId: string, count = 3) {
-  const stickers = [];
+  const stickers: StickerType[] = [];
 
   // Define edge positions (corners and sides) - more spread out
   const edgePositions = [
@@ -75,7 +75,7 @@ function generateStickers(momentId: string, count = 3) {
     { x: 110, y: 100, zone: "corner-bottom-right" },
   ];
 
-  const maxAttempts = 50; // Prevent infinite loops
+  const maxAttempts = 50;
 
   for (let i = 0; i < count; i++) {
     let attempts = 0;
@@ -117,9 +117,11 @@ function generateStickers(momentId: string, count = 3) {
       };
 
       // Check for overlaps with existing stickers
-      validPosition = stickers.every(
-        (existingSticker) => !checkOverlap(newSticker, existingSticker)
-      );
+      if (newSticker) {
+        validPosition = stickers.every(
+          (existingSticker) => !checkOverlap(newSticker!, existingSticker)
+        );
+      }
       attempts++;
     }
 
